@@ -20,27 +20,32 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    var payload = {
+    var payload = new URLSearchParams({
       name: name,
       contact: contact,
       flavor: flavor,
       quantity: quantity,
       submittedAt: new Date().toISOString(),
-    };
+    });
 
     fetch(webhookUrl, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify(payload),
+      body: payload.toString(),
     })
       .then(function (response) {
         if (!response.ok) {
           throw new Error("Помилка відправлення: " + response.statusText);
         }
-        return response.json().catch(function () {
-          return {};
+        return response.text().then(function (text) {
+          console.log("Webhook response:", text);
+          try {
+            return JSON.parse(text);
+          } catch (e) {
+            return {};
+          }
         });
       })
       .then(function () {
