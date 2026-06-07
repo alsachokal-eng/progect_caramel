@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   var form = document.getElementById("order-form");
-  var webhookUrl = "https://hook.make.com/YOUR_WEBHOOK_ID"; // Замініть на свій Make webhook URL
+  var webhookUrl = "https://hook.make.com/teiqoiaxreouyo696y155xoodwin7haa@hook.eu1.make.com"; // Замініть на свій Make webhook URL
 
   if (!form) {
     return;
