@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("order-form");
   const statusText = document.getElementById("order-status");
   const submitBtn = form ? form.querySelector("button[type='submit']") : null;
-  const webhookUrl = form?.dataset?.webhookUrl || "https://hook.eu1.make.com/bpj0xrlabzcvknkbd67v4up2wc212n7e";
+  const webhookUrl = form?.dataset?.webhookUrl || "";
 
   if (!form) {
     console.error("Order form not found");
