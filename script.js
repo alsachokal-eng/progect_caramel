@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Order form script loaded");
   var form = document.getElementById("order-form");
-  var webhookUrl = "https://hook.eu1.make.com/teiqoiaxreouyo696y155xoodwin7haa"; // Замініть на свій Make webhook URL
+  var webhookUrl = "https://hook.eu1.make.com/bpj0xrlabzcvknkbd67v4up2wc212n7e"; // Замініть на свій Make webhook URL
 
   if (!form) {
     console.error("Order form not found");
