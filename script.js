@@ -20,27 +20,33 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    var payload = new URLSearchParams({
+    var payload = {
       name: name,
       contact: contact,
       flavor: flavor,
       quantity: quantity,
       submittedAt: new Date().toISOString(),
-    });
+    };
+
+    console.log("Sending webhook payload:", payload);
 
     fetch(webhookUrl, {
       method: "POST",
+      mode: "cors",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body: payload.toString(),
+      body: JSON.stringify(payload),
     })
       .then(function (response) {
-        if (!response.ok) {
-          throw new Error("Помилка відправлення: " + response.statusText);
-        }
         return response.text().then(function (text) {
-          console.log("Webhook response:", text);
+          console.log("Webhook response status:", response.status, response.statusText);
+          console.log("Webhook response body:", text);
+
+          if (!response.ok) {
+            throw new Error("Помилка відправлення: " + response.status + " " + response.statusText);
+          }
+
           try {
             return JSON.parse(text);
           } catch (e) {
@@ -52,6 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Дякуємо! Заявка надіслана. Ми підготуємо її в Excel.");
         form.reset();
       })
+      .catch(function (error) {
+        console.error(error);
+        alert("Не вдалося надіслати заявку. Перевірте URL вебхука Make та доступ до мережі.");
+      });
+  });
+});
       .catch(function (error) {
         console.error(error);
         alert("Не вдалося надіслати заявку. Перевірте URL вебхука Make та доступ до мережі.");
