@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("Order form script loaded");
   var form = document.getElementById("order-form");
   var webhookUrl = "https://hook.eu1.make.com/teiqoiaxreouyo696y155xoodwin7haa"; // Замініть на свій Make webhook URL
 
   if (!form) {
+    console.error("Order form not found");
     return;
   }
 
@@ -58,12 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Дякуємо! Заявка надіслана. Ми підготуємо її в Excel.");
         form.reset();
       })
-      .catch(function (error) {
-        console.error(error);
-        alert("Не вдалося надіслати заявку. Перевірте URL вебхука Make та доступ до мережі.");
-      });
-  });
-});
       .catch(function (error) {
         console.error(error);
         alert("Не вдалося надіслати заявку. Перевірте URL вебхука Make та доступ до мережі.");
