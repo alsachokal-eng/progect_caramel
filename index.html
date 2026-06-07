@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Солона карамель | Sweet Salt</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <p class="eyebrow">Натуральні десерти</p>
+      <h1>Солона карамель для найсолодших моментів</h1>
+      <p class="hero__text">Ручна робота, преміальні інгредієнти та ідеальний баланс солодкого та солоного.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#products">Переглянути</a>
+        <a class="btn btn--secondary" href="#order">Замовити</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section section--intro" id="products">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Наш асортимент</p>
+          <h2>Три варіанти солодкого задоволення</h2>
+          <p>Карамель на вершках, з горіхами чи цитрусовою нотою — обирай свій улюблений смак.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <h3>Класична карамель</h3>
+            <p>Ніжна карамель зі щіпкою морської солі — ідеальна для подарунків або десерту вдома.</p>
+            <span class="price">250 ₴ / 200 г</span>
+          </article>
+          <article class="card">
+            <h3>Карамель з горіхами</h3>
+            <p>Додано обсмажений мигдаль та фундук для хрумкого контрасту з м'якою текстурою.</p>
+            <span class="price">320 ₴ / 200 г</span>
+          </article>
+          <article class="card">
+            <h3>Цитрусова карамель</h3>
+            <p>Світлий аромат лимону і апельсину робить смак легким і освіжаючим.</p>
+            <span class="price">280 ₴ / 200 г</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--features">
+      <div class="container grid grid--2">
+        <div>
+          <h2>Чому обирають Sweet Salt?</h2>
+          <ul>
+            <li>Преміальні натуральні інгредієнти</li>
+            <li>Ручне виготовлення на замовлення</li>
+            <li>Швидка доставка по Україні</li>
+          </ul>
+        </div>
+        <div class="feature-image"></div>
+      </div>
+    </section>
+
+    <section class="section section--order" id="order">
+      <div class="container">
+        <div class="order-card">
+          <div>
+            <p class="eyebrow">Готовий замовити?</p>
+            <h2>Залиш заявку за кілька секунд</h2>
+            <p>Вкажи свій вибір, контактні дані та отримай підтвердження замовлення.</p>
+          </div>
+          <form id="order-form" class="form">
+            <label>
+              Ім'я
+              <input type="text" name="name" placeholder="Оля" required />
+            </label>
+            <label>
+              Телефон або Email
+              <input type="text" name="contact" placeholder="+380 67 123 45 67" required />
+            </label>
+            <label>
+              Обраний смак
+              <select name="flavor" required>
+                <option value="">Обрати...</option>
+                <option value="classic">Класична карамель</option>
+                <option value="nuts">Карамель з горіхами</option>
+                <option value="citrus">Цитрусова карамель</option>
+              </select>
+            </label>
+            <label>
+              Кількість
+              <input type="number" name="quantity" value="1" min="1" required />
+            </label>
+            <button class="btn btn--primary" type="submit">Надіслати заявку</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <p>Sweet Salt — домашня солона карамель в Україні.</p>
+      <p>Зв'яжіться з нами: <a href="mailto:hello@sweetsalt.ua">hello@sweetsalt.ua</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
