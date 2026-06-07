@@ -1,22 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Order form script loaded");
   var form = document.getElementById("order-form");
-  var submitButton = document.getElementById("order-submit");
-  var webhookUrl = "https://hook.eu1.make.com/bpj0xrlabzcvknkbd67v4up2wc212n7e"; // Замініть на свій Make webhook URL
+  var webhookUrl = "https://hook.eu1.make.com/YOUR_WEBHOOK_ID"; // Замініть на свій Make webhook URL
 
   if (!form) {
     console.error("Order form not found");
     return;
   }
 
-  if (!submitButton) {
-    console.error("Order submit button not found");
+  if (webhookUrl.includes("YOUR_WEBHOOK_ID") || webhookUrl.includes("hook.make.com")) {
+    console.error("Webhook URL не встановлено або неправильний.");
+    alert("Вставте свій дійсний URL вебхука Make у script.js і збережіть файл.");
     return;
   }
 
-  submitButton.addEventListener("click", function (event) {
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
-    console.log("Order button clicked");
+    console.log("Order form submit triggered");
 
     var formData = new FormData(form);
     var name = formData.get("name")?.toString().trim();
