@@ -1,83 +1,102 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Order form script loaded");
-
-  var form = document.getElementById("order-form");
-  var webhookUrl = "https://hook.eu1.make.com/bpj0xrlabzcvknkbd67v4up2wc212n7e"; // Вставте свій Make webhook URL
+  const form = document.getElementById("order-form");
+  const statusText = document.getElementById("order-status");
+  const submitBtn = form ? form.querySelector("button[type='submit']") : null;
+  const webhookUrl = form?.dataset?.webhookUrl || "";
 
   if (!form) {
     console.error("Order form not found");
     return;
   }
 
-  form.addEventListener("submit", function (event) {
+  function showStatus(message, isError) {
+    if (!statusText) return;
+    statusText.textContent = message;
+    statusText.style.color = isError ? "#9b4b35" : "#6c5d51";
+  }
+
+  async function sendOrder(orderData) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+        signal: controller.signal,
+      });
+
+      const text = await response.text();
+      console.log("Webhook response:", response.status, response.statusText, text);
+
+      if (!response.ok) {
+        throw new Error(`Помилка відправлення: ${response.status} ${response.statusText}`);
+      }
+
+      return text;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
-    console.log("Order form submit triggered");
 
-    var submitBtn = form.querySelector('[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
-
-    var formData = new FormData(form);
-    var data = {
-      name: (formData.get("name") || "").toString().trim(),
-      contact: (formData.get("contact") || "").toString().trim(),
-      flavor: (formData.get("flavor") || "").toString(),
-      quantity: (formData.get("quantity") || "1").toString(),
-      submittedAt: new Date().toISOString(),
-    };
-
-    if (!data.name || !data.contact || !data.flavor || !data.quantity) {
-      alert("Будь ласка, заповніть усі поля перед відправленням.");
-      if (submitBtn) submitBtn.disabled = false;
+    if (!webhookUrl || webhookUrl.includes("YOUR_WEBHOOK_ID")) {
+      showStatus("Оновіть webhook URL у формі перед відправкою.", true);
       return;
     }
 
-    console.log("Sending webhook payload:", data);
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Надсилається...";
+    }
 
-    var controller = new AbortController();
-    var timeout = setTimeout(function () {
-      controller.abort();
-    }, 10000);
+    const formData = new FormData(form);
+    const orderData = {
+      name: (formData.get("name") || "").toString().trim(),
+      contact: (formData.get("contact") || "").toString().trim(),
+      flavor: (formData.get("flavor") || "").toString(),
+      quantity: Number(formData.get("quantity") || 1),
+      submittedAt: new Date().toISOString(),
+    };
 
-    fetch(webhookUrl, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-      signal: controller.signal,
-    })
-      .then(function (response) {
-        clearTimeout(timeout);
-        return response.text().then(function (text) {
-          console.log("Webhook response status:", response.status, response.statusText);
-          console.log("Webhook response body:", text);
+    if (!orderData.name || !orderData.contact || !orderData.flavor || orderData.quantity < 1) {
+      showStatus("Будь ласка, заповніть усі поля коректно.", true);
+      if (submitBtn) submitBtn.disabled = false;
+      if (submitBtn) submitBtn.textContent = "Надіслати заявку";
+      return;
+    }
 
-          if (!response.ok) {
-            throw new Error("Помилка відправлення: " + response.status + " " + response.statusText);
-          }
+    showStatus("Заявка оброблюється...", false);
 
-          try {
-            return JSON.parse(text);
-          } catch (e) {
-            return {};
-          }
-        });
-      })
-      .then(function () {
-        alert("Дякуємо! Заявка надіслана. Ми підготуємо її в Excel.");
-        form.reset();
-      })
-      .catch(function (error) {
-        console.error(error);
-        if (error.name === 'AbortError') {
-          alert('Таймаут при відправленні. Спробуйте ще раз.');
-        } else {
-          alert("Не вдалося надіслати заявку. Перевірте URL вебхука Make та доступ до мережі.");
+    try {
+      await sendOrder(orderData);
+      showStatus("Дякуємо! Ваша заявка успішно надіслана.", false);
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      const isTimeout = error.name === "AbortError";
+      showStatus(
+        isTimeout
+          ? "Таймаут при відправленні. Спробуйте ще раз." 
+          : "Не вдалося надіслати заявку. Перевірте з'єднання та URL вебхука.",
+        true
+      );
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Надіслати заявку";
+      }
+      setTimeout(() => {
+        if (statusText) {
+          statusText.textContent = "";
         }
-      })
-      .finally(function () {
-        if (submitBtn) submitBtn.disabled = false;
-      });
+      }, 7000);
+    }
   });
 });

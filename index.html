@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Солона карамель | Sweet Salt</title>
+  <title>Sweet Salt — преміальна солона карамель</title>
+  <meta name="description" content="Преміальна солона карамель ручної роботи з натуральними інгредієнтами. Замовляйте зі швидкою доставкою по Україні." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="hero">
     <div class="hero__content">
       <p class="eyebrow">Натуральні десерти</p>
-      <h1>Солона карамель для найсолодших моментів</h1>
-      <p class="hero__text">Ручна робота, преміальні інгредієнти та ідеальний баланс солодкого та солоного.</p>
+      <h1>Солона карамель для незабутніх моментів</h1>
+      <p class="hero__text">Ручне приготування, преміальні інгредієнти і вишуканий баланс смаку.</p>
       <div class="hero__actions">
         <a class="btn btn--primary" href="#products">Переглянути</a>
         <a class="btn btn--secondary" href="#order">Замовити</a>
@@ -24,23 +28,23 @@
       <div class="container">
         <div class="section__header">
           <p class="eyebrow">Наш асортимент</p>
-          <h2>Три варіанти солодкого задоволення</h2>
-          <p>Карамель на вершках, з горіхами чи цитрусовою нотою — обирай свій улюблений смак.</p>
+          <h2>Три варіанти преміального смаку</h2>
+          <p>Оберіть солоду карамель зі свіжими нотами цитрусу, хрумким горіховим акцентом або ніжною класикою.</p>
         </div>
         <div class="cards">
           <article class="card">
             <h3>Класична карамель</h3>
-            <p>Ніжна карамель зі щіпкою морської солі — ідеальна для подарунків або десерту вдома.</p>
+            <p>М'яка, ароматна і витончена — для тих, хто цінує класичну насолоду.</p>
             <span class="price">250 ₴ / 200 г</span>
           </article>
           <article class="card">
-            <h3>Карамель з горіхами</h3>
-            <p>Додано обсмажений мигдаль та фундук для хрумкого контрасту з м'якою текстурою.</p>
+            <h3>Горіхова карамель</h3>
+            <p>Обсмажений фундук та мигдаль створюють текстуру з елегантним хрускотом.</p>
             <span class="price">320 ₴ / 200 г</span>
           </article>
           <article class="card">
             <h3>Цитрусова карамель</h3>
-            <p>Світлий аромат лимону і апельсину робить смак легким і освіжаючим.</p>
+            <p>Світлий аромат лимону і апельсину додає десерту освіжаючої вишуканості.</p>
             <span class="price">280 ₴ / 200 г</span>
           </article>
         </div>
@@ -50,11 +54,11 @@
     <section class="section section--features">
       <div class="container grid grid--2">
         <div>
-          <h2>Чому обирають Sweet Salt?</h2>
-          <ul>
-            <li>Преміальні натуральні інгредієнти</li>
-            <li>Ручне виготовлення на замовлення</li>
-            <li>Швидка доставка по Україні</li>
+          <h2>Чому Sweet Salt?</h2>
+          <ul class="feature-list">
+            <li>Преміальні інгредієнти з перевірених джерел</li>
+            <li>Ручне виготовлення в невеликих партіях</li>
+            <li>Ексклюзивне пакування та швидка доставка</li>
           </ul>
         </div>
         <div class="feature-image"></div>
@@ -65,11 +69,11 @@
       <div class="container">
         <div class="order-card">
           <div>
-            <p class="eyebrow">Готовий замовити?</p>
-            <h2>Залиш заявку за кілька секунд</h2>
-            <p>Вкажи свій вибір, контактні дані та отримай підтвердження замовлення.</p>
+            <p class="eyebrow">Готові замовити?</p>
+            <h2>Залиште заявку за кілька секунд</h2>
+            <p>Надайте свої контакти, оберіть смак і кількість — ми підтвердимо замовлення якнайшвидше.</p>
           </div>
-          <form id="order-form" class="form">
+          <form id="order-form" class="form" data-webhook-url="https://hook.eu1.make.com/YOUR_WEBHOOK_ID">
             <label>
               Ім'я
               <input type="text" name="name" placeholder="Оля" required />
@@ -91,7 +95,10 @@
               Кількість
               <input type="number" name="quantity" value="1" min="1" required />
             </label>
-            <button id="order-submit" class="btn btn--primary" type="button">Надіслати заявку</button>
+            <div class="order-footer">
+              <span id="order-status"></span>
+              <button class="btn btn--primary" type="submit">Надіслати заявку</button>
+            </div>
           </form>
         </div>
       </div>
@@ -100,8 +107,8 @@
 
   <footer class="footer">
     <div class="container footer__content">
-      <p>Sweet Salt — домашня солона карамель в Україні.</p>
-      <p>Зв'яжіться з нами: <a href="mailto:hello@sweetsalt.ua">hello@sweetsalt.ua</a></p>
+      <p>Sweet Salt — преміальна домашня солона карамель в Україні.</p>
+      <p>Пишіть: <a href="mailto:hello@sweetsalt.ua">hello@sweetsalt.ua</a></p>
     </div>
   </footer>
 
